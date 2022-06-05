@@ -49,8 +49,9 @@ namespace ne {
 
     glm::vec3 Lambertian::attenuation() const {
       // implement your code
+        glm::vec3 albedo = color_;
 
-      return glm::vec3(0.18f);
+      return albedo;
     }
 
 

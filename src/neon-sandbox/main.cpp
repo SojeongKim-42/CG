@@ -92,6 +92,6 @@ int main(int argc, char *argv[]) {
   // start rendering
   tf.wait_for_all();
 
-  canvas.save("antialiasing.png");
+  canvas.save("test.png");
   return 0;
 }
