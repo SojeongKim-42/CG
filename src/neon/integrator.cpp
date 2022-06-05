@@ -2,29 +2,21 @@
 #include "neon/intersection.hpp"
 #include "neon/material.hpp"
 #include "neon/scene.hpp"
-#include <random>
 
-constexpr int FLOAT_MIN = -1;
-constexpr int FLOAT_MAX = 1;
 
 namespace ne {
 
-    namespace core {
-
-
-        std::random_device rd;
-        std::default_random_engine eng(rd());
-        std::uniform_real_distribution<> distr(FLOAT_MIN, FLOAT_MAX);
-
-        glm::vec3 unit_random_sphere() {
-            while (true) {
-                auto p = glm::vec3(distr(eng));
-                if (pow(glm::length(p), 2) >= 1)
-                    continue;
-                else
-                    return p;
-            }
+    glm::vec3 unit_random_sphere() {
+        while (true) {
+            auto p = glm::vec3(random_float(-1,1));
+            if (pow(glm::length(p), 2) >= 1)
+                continue;
+            else
+                return p;
         }
+    }
+
+    namespace core {
 
         glm::vec3 Integrator::integrate(const ne::Ray &ray, std::shared_ptr<ne::Scene> scene, int depth) {
             glm::vec3 L{0.0f};

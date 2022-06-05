@@ -58,21 +58,26 @@ int main(int argc, char *argv[]) {
       // Iterate pixels in tile
       for (auto &index : tile) {
         vec3 color{0.0f};
-        float u = float(index.x) / float(canvas.width());
-        float v = float(index.y) / float(canvas.height());
 
-        // construct ray
-        ne::Ray r = camera.sample(u, v);
 
-        // compute color of ray sample and then add to pixel
+        // construct multiple ray
+        int sample_per_pixel = 64;
         ne::core::Integrator Li;
-        color += Li.integrate(r, scene,50);
-
-        color = color;
-        color = clamp(color, 0.0f, 1.0f);
+        for (int s = 0; s < sample_per_pixel; ++s) {
+            float u = (float(index.x) + ne::random_float()) / float(canvas.width() - 1);
+            float v = (float(index.y) + ne::random_float()) / float(canvas.height() - 1);
+            ne:: Ray r = camera.sample(u, v);
+            color += Li.integrate(r, scene, 50);
+        }
 
         // record to canvas
+        float scale = 1.0 / sample_per_pixel;
+        color *= scale;
+        color = clamp(color, 0.0f, 1.0f);   
         canvas(index) = u8vec4(color * 255.99f, 255.0f);
+
+
+        
 
         // update progressbar and draw it every 10 progress
         if (++progressbar % 20 == 0)
@@ -87,6 +92,6 @@ int main(int argc, char *argv[]) {
   // start rendering
   tf.wait_for_all();
 
-  canvas.save("specular3.png");
+  canvas.save("antialiasing.png");
   return 0;
 }
