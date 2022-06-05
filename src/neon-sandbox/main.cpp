@@ -13,6 +13,9 @@
 #include <memory>
 #include <taskflow/taskflow.hpp>
 
+using namespace std;
+using namespace glm;
+
 int main(int argc, char *argv[]) {
   int nx = 512;
   int ny = 512;
@@ -20,22 +23,22 @@ int main(int argc, char *argv[]) {
 
   // create output image
   ne::Image canvas(nx, ny);
-  glm::uvec2 tilesize(32, 32);
+  uvec2 tilesize(32, 32);
 
   // Split images into set of tiles.
   // Each thread render its corresponding tile.
-  std::vector<ne::TileIterator> tiles = canvas.toTiles(tilesize);
+  vector<ne::TileIterator> tiles = canvas.toTiles(tilesize);
 
   // create scene
-  std::shared_ptr<ne::Scene> scene = testScene1();
+  shared_ptr<ne::Scene> scene = testScene1();
 
   // spwan camera
   static ne::Camera camera;
   float distToFocus = 4;
   float aperture = 0.1f;
-  glm::vec3 lookfrom(0, 0, 3);
-  glm::vec3 lookat(0, 0, 0);
-  camera = ne::Camera(lookfrom, lookat, glm::vec3(0, 1, 0), 60,
+  vec3 lookfrom(0, 0, 3);
+  vec3 lookat(0, 0, 0);
+  camera = ne::Camera(lookfrom, lookat, vec3(0, 1, 0), 60,
                       float(canvas.width()) / float(canvas.height()), aperture,
                       distToFocus);
 
@@ -54,7 +57,7 @@ int main(int argc, char *argv[]) {
     tf::Task taskTileRender = tf.emplace([&]() {
       // Iterate pixels in tile
       for (auto &index : tile) {
-        glm::vec3 color{0.0f};
+        vec3 color{0.0f};
         float u = float(index.x) / float(canvas.width());
         float v = float(index.y) / float(canvas.height());
 
@@ -63,13 +66,13 @@ int main(int argc, char *argv[]) {
 
         // compute color of ray sample and then add to pixel
         ne::core::Integrator Li;
-        color += Li.integrate(r, scene);
+        color += Li.integrate(r, scene,50);
 
         color = color;
-        color = glm::clamp(color, 0.0f, 1.0f);
+        color = clamp(color, 0.0f, 1.0f);
 
         // record to canvas
-        canvas(index) = glm::u8vec4(color * 255.99f, 255.0f);
+        canvas(index) = u8vec4(color * 255.99f, 255.0f);
 
         // update progressbar and draw it every 10 progress
         if (++progressbar % 20 == 0)
@@ -84,6 +87,6 @@ int main(int argc, char *argv[]) {
   // start rendering
   tf.wait_for_all();
 
-  canvas.save("result.png");
+  canvas.save("specular3.png");
   return 0;
 }

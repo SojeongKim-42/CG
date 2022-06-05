@@ -6,16 +6,16 @@
 
 namespace ne {
 
-class Sphere final : public ne::abstract::Rendable {
-public:
-  explicit Sphere(glm::vec3 c, float r, MaterialPointer m = nullptr)
-      : ne::abstract::Rendable(m), center_(c), radius_(r) {}
+    class Sphere final : public ne::abstract::Rendable {
+        public:
+          explicit Sphere(glm::vec3 c, float r, MaterialPointer m = nullptr)
+              : ne::abstract::Rendable(m), center_(c), radius_(r) {}
 
-  bool rayIntersect(ne::Ray &ray, Intersection &hit) override;
+          bool rayIntersect(ne::Ray &ray, Intersection &hit) override;
 
-  glm::vec3 center_;
-  float radius_;
-};
+          glm::vec3 center_;
+          float radius_;
+    };
 
 } // namespace ne
 #endif // __SPHERE_H_

@@ -8,16 +8,16 @@
 // Factory function for simple test scene1
 std::shared_ptr<ne::Scene> testScene1() {
   // Define materials
-  const ne::MaterialPointer mat1 =
-      std::make_shared<ne::Lambertian>(glm::vec3{0.8f, 0.3f, 0.3f});
+  const ne::MaterialPointer mat1 = 
+      std::make_shared<ne::Lambertian>(glm::vec3{0.8f, 0.3f, 0.3f}); //diffuse(o2)
   const ne::MaterialPointer mat2 =
-      std::make_shared<ne::Lambertian>(glm::vec3{0.8f, 0.8f, 0.0f});
+      std::make_shared<ne::Lambertian>(glm::vec3{0.8f, 0.8f, 0.0f}); //floor
   const ne::MaterialPointer mat3 =
-      std::make_shared<ne::Metal>(glm::vec3{0.8f, 0.6f, 0.2f});
+      std::make_shared<ne::Metal>(glm::vec3{0.8f, 0.6f, 0.2f}); //metal(o3)
   const ne::MaterialPointer mat4 =
-      std::make_shared<ne::Dielectric>(glm::vec3{0.8f, 0.8f, 0.8f}, 1.5f);
+      std::make_shared<ne::Dielectric>(glm::vec3{0.8f, 0.8f, 0.8f}, 1.5f);  //specular(o1)
   const ne::MaterialPointer mat5 =
-      std::make_shared<ne::DiffuseLight>(glm::vec3{2.0, 2.0, 2.0});
+      std::make_shared<ne::DiffuseLight>(glm::vec3{2.0, 2.0, 2.0}); //light
 
   // Define rendable geometries and bind materials
   const ne::RendablePointer s1 =

@@ -10,19 +10,19 @@
 
 namespace ne {
 
-class Scene {
+	class Scene {
 
-public:
-  void add(RendablePointer object);
-  glm::vec3 background(ne::Ray &ray);
-  bool rayIntersect(ne::Ray &ray, ne::Intersection &hit);
-  glm::vec3 sampleDirectLight(ne::Ray &ray, ne::Intersection &hit) const;
-  glm::vec3 sampleBackgroundLight(const glm::vec3 &dir) const;
+		public:
+		  void add(RendablePointer object);
+		  glm::vec3 background(ne::Ray &ray);
+		  bool rayIntersect(ne::Ray &ray, ne::Intersection &hit);
+		  glm::vec3 sampleDirectLight(ne::Ray &ray, ne::Intersection &hit) const;
+		  glm::vec3 sampleBackgroundLight(const glm::vec3 &dir) const;
 
-private:
-  std::vector<ne::RendablePointer> objects_;
-  std::vector<ne::RendablePointer> lights_;
-};
+		private:
+		  std::vector<ne::RendablePointer> objects_;
+		  std::vector<ne::RendablePointer> lights_;
+	};
 
 } // namespace ne
 

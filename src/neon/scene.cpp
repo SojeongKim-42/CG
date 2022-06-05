@@ -6,37 +6,43 @@
 
 namespace ne {
 
-void Scene::add(ne::RendablePointer object) {
-  objects_.push_back(object);
-  if (glm::length(object->material_->emitted()) > 0.0f) {
-    lights_.push_back(object);
-  }
-}
+    void Scene::add(ne::RendablePointer object) {
 
-bool Scene::rayIntersect(ne::Ray &ray, ne::Intersection &inter) {
-  bool foundIntersection = false;
+        objects_.push_back(object);
+        if (glm::length(object->material_->emitted()) > 0.0f) {
+            lights_.push_back(object);
+        }
+    }
 
-  // Do not change order between a || b.
-  // sometimes result(a || b) != result (b || a) and this is the case!
-  // this is because b will not evaluated if a is true in this statment.
-  // e.g. a = a || b (b will not be evaluated because a is true)
-  for (const auto o : objects_) {
-    foundIntersection = o->rayIntersect(ray, inter) || foundIntersection;
-  }
+    bool Scene::rayIntersect(ne::Ray &ray, ne::Intersection &inter) {
+        bool foundIntersection = false;
 
-  return foundIntersection;
-}
+        // Do not change order between a || b.
+        // sometimes result(a || b) != result (b || a) and this is the case!
+        // this is because b will not evaluated if a is true in this statment.
+        // e.g. a = a || b (b will not be evaluated because a is true)
+        for (const auto o : objects_) {
+        foundIntersection = o->rayIntersect(ray, inter) || foundIntersection;
+        }
 
-glm::vec3 Scene::sampleBackgroundLight(const glm::vec3 &dir) const {
-  glm::vec3 unit = glm::normalize(dir);
-  float t = 0.5f * (unit.y + 1.0f);
-  return ((1.0f - t) * glm::vec3(1.0f) + t * glm::vec3(0.5, 0.5, 0.9));
-}
+        return foundIntersection;
+    }
 
-glm::vec3 Scene::sampleDirectLight(ne::Ray &ray, ne::Intersection &hit) const {
-  // implement your code
-  glm::vec3 result;
-  return result;
-}
+    glm::vec3 Scene::sampleBackgroundLight(const glm::vec3 &dir) const {
+        glm::vec3 unit = glm::normalize(dir);
+        float t = 0.5f * (unit.y + 1.0f);
+        return ((1.0f - t) * glm::vec3(1.0f) + t * glm::vec3(0.5, 0.5, 0.9));
+    }
+
+    glm::vec3 Scene::sampleDirectLight(ne::Ray &ray, ne::Intersection &hit) const {
+        // implement your code
+        // ray=light income ray
+        glm::vec3 light_dir{(0.0f,-1.0f,0.0f)};
+        glm::vec3 result(0.0f);
+        float intensity=0.7f;
+        //diffuse 
+        result+=intensity*(glm::dot(hit.n,light_dir));
+        return result;
+    }
 
 } // namespace ne

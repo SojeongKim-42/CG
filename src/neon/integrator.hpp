@@ -14,7 +14,7 @@ class Integrator {
 public:
   // integration part of rendering equation
   virtual glm::vec3 integrate(const ne::Ray &ray,
-                              std::shared_ptr<ne::Scene> scene);
+                              std::shared_ptr<ne::Scene> scene, int depth);
 };
 
 } // namespace core
