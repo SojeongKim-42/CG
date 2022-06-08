@@ -21,6 +21,7 @@ namespace ne {
     }
     */
 
+
     inline float random_float() {
         // Returns a random real in [0,1).
         return rand() / (RAND_MAX + 1.0);
@@ -29,6 +30,28 @@ namespace ne {
     inline float random_float(double min, double max) {
         // Returns a random real in [min,max).
         return min + (max - min) * random_float();
+    }
+
+    inline glm::vec3 random_in_unit_sphere() {
+        while (true) {
+            auto p = glm::vec3(random_float(-1, 1));
+            if (glm::length(p) >= 1)
+                continue;
+            else
+                return p;
+        }
+    }
+
+    inline glm::vec3 unit_random_vector() {
+        return glm::normalize(random_in_unit_sphere());
+    }
+
+    inline glm::vec3 unit_random_vector_hemisphere(glm::vec3 normal) {
+        glm::vec3 in_unit_sphere = unit_random_vector();
+        if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+            return in_unit_sphere;
+        else
+            return -in_unit_sphere;
     }
 
 namespace core {
