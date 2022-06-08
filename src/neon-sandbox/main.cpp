@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
             float u = (float(index.x) + ne::random_float()) / float(canvas.width() - 1);
             float v = (float(index.y) + ne::random_float()) / float(canvas.height() - 1);
             ne:: Ray r = camera.sample(u, v);
-            color += Li.integrate(r, scene, 50);
+            color += Li.integrate(r, scene, 100);
         }
 
         // record to canvas
@@ -92,6 +92,6 @@ int main(int argc, char *argv[]) {
   // start rendering
   tf.wait_for_all();
 
-  canvas.save("spp1024.png");
+  canvas.save("final.png");
   return 0;
 }

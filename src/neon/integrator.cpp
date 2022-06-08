@@ -23,23 +23,20 @@ namespace ne {
                 ne::Ray scattered(glm::vec3(0.0f),glm::vec3(0.0f));
                 glm::vec3 albedo = material->attenuation();
                 
+                // if input ray scatters
                 if (material->scatter(r, hit, scattered)) {
                     L+= albedo * integrate(scattered, scene, depth - 1); 
                     return L;
                 }    
-                // lighting
-                //else 
+                // else
                 L += material->emitted();
                 return L;
             }          
 
-            // background color
-
             else {
                 L = scene->sampleBackgroundLight(r.dir);
                 return L;
-            }          
-            
+            }                      
         }
     } // namespace core
 } // namespace ne

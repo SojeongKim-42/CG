@@ -27,10 +27,8 @@ namespace ne {
     //specular, mirror
     bool Dielectric::scatter(const ne::Ray &r_in, const ne::Intersection &hit,
                              ne::Ray &r_out) const {
-      // Implement your code
 
         float refraction_ratio = hit.front_face ? (1.0 / IOR_) : IOR_;
-
         glm::vec3 unit_direction = glm::normalize(r_in.dir);
         float cos_theta = fmin(glm::dot(-unit_direction, hit.n), 1.0);
         glm::vec3 r_out_perp = refraction_ratio * (unit_direction + (cos_theta * hit.n));
@@ -40,31 +38,16 @@ namespace ne {
         r_out.o = hit.p;
         r_out.dir=refracted;
         return true;
-
-      return false;
     }
 
     glm::vec3 Dielectric::attenuation() const {
-      // implement your code
         glm::vec3 albedo = color_;
-
         return albedo;
     }
 
     // diffuse
     bool Lambertian::scatter(const ne::Ray &r_in, const ne::Intersection &hit,
                              ne::Ray &r_out) const {
-      // Implement your code        
-
-        /*
-        auto scatter_direction = hit.n +  unit_random_vector();
-        //if ((scatter_direction[0] < 1e-8)&& (scatter_direction[1] < 1e-8)&& (scatter_direction[2] < 1e-8))
-        //    scatter_direction = hit.n;
-        ne::Ray scattered(hit.p, scatter_direction);
-        r_out = scattered;
-        return true;
-        */
-
         glm::vec3 target = hit.n + hit.p + random_in_unit_sphere();
         r_out.o = hit.p;
         r_out.dir = target - hit.p;
@@ -72,10 +55,8 @@ namespace ne {
     }
 
     glm::vec3 Lambertian::attenuation() const {
-      // implement your code
         glm::vec3 albedo = color_;
-
-      return albedo;
+        return albedo;
     }
 
 
@@ -85,14 +66,12 @@ namespace ne {
         glm::vec3 n = hit.n;
         glm::vec3 reflected = v - 2 * glm::dot(v, n) * n;
         r_out.o = hit.p;
-        r_out.dir = reflected + 0.5f * random_in_unit_sphere();
+        r_out.dir = reflected + 0.7f * random_in_unit_sphere();
         return (glm::dot(r_out.dir, hit.n) > 0);
     }
 
     glm::vec3 Metal::attenuation() const {
-      // implement your code
         glm::vec3 albedo = color_;
-
         return albedo;
     }
 
