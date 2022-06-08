@@ -25,6 +25,8 @@ namespace ne {
       hit.p = ray.at(t);
       hit.n = (hit.p - center_) / radius_;
       hit.material = material_;
+      glm:: vec3 outward_normal = (hit.p - center_) / radius_;
+      hit.set_face_normal(ray, outward_normal);
 
       return true;
     }

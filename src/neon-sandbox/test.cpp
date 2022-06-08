@@ -27,7 +27,7 @@ std::shared_ptr<ne::Scene> testScene1() {
   const ne::RendablePointer s3 =
       std::make_shared<ne::Sphere>(glm::vec3(1, 0, -1), 0.5f, mat3);
   const ne::RendablePointer s4 =
-      std::make_shared<ne::Sphere>(glm::vec3(-1, 0, -1), 0.5f, mat1);
+      std::make_shared<ne::Sphere>(glm::vec3(-1, 0, -1), 0.5f, mat4);
   const ne::RendablePointer s5 =
       std::make_shared<ne::Sphere>(glm::vec3(0, 1, -1), 0.5f, mat5);
 

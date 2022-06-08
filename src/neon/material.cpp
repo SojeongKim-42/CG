@@ -29,8 +29,17 @@ namespace ne {
                              ne::Ray &r_out) const {
       // Implement your code
 
-        float x=2*(glm::dot(hit.n,r_in.dir));
-        r_out.dir=r_in.dir-x*hit.n ;
+        float refraction_ratio = hit.front_face ? (1.0 / IOR_) : IOR_;
+
+        glm::vec3 unit_direction = glm::normalize(r_in.dir);
+        float cos_theta = fmin(glm::dot(-unit_direction, hit.n), 1.0);
+        glm::vec3 r_out_perp = refraction_ratio * (unit_direction + (cos_theta * hit.n));
+        glm::vec3 r_out_parallel = float(-sqrt(fabs(1.0 - length(r_out_perp)* length(r_out_perp)))) * hit.n;
+        glm::vec3 refracted = r_out_perp + r_out_parallel;
+
+        r_out.o = hit.p;
+        r_out.dir=refracted;
+        return true;
 
       return false;
     }
@@ -75,8 +84,8 @@ namespace ne {
         glm::vec3 v = glm::normalize(r_in.dir);
         glm::vec3 n = hit.n;
         glm::vec3 reflected = v - 2 * glm::dot(v, n) * n;
-        ne::Ray scattered(hit.p, reflected + 0.5f*random_in_unit_sphere());
-        r_out = scattered;
+        r_out.o = hit.p;
+        r_out.dir = reflected + 0.5f * random_in_unit_sphere();
         return (glm::dot(r_out.dir, hit.n) > 0);
     }
 

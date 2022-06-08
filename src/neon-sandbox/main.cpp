@@ -61,13 +61,13 @@ int main(int argc, char *argv[]) {
 
 
         // construct multiple ray
-        int sample_per_pixel = 64;
+        int sample_per_pixel = 1024;
         ne::core::Integrator Li;
         for (int s = 0; s < sample_per_pixel; ++s) {
             float u = (float(index.x) + ne::random_float()) / float(canvas.width() - 1);
             float v = (float(index.y) + ne::random_float()) / float(canvas.height() - 1);
             ne:: Ray r = camera.sample(u, v);
-            color += Li.integrate(r, scene, 100);
+            color += Li.integrate(r, scene, 50);
         }
 
         // record to canvas
@@ -92,6 +92,6 @@ int main(int argc, char *argv[]) {
   // start rendering
   tf.wait_for_all();
 
-  canvas.save("test_L.png");
+  canvas.save("spp1024.png");
   return 0;
 }
