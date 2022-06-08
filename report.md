@@ -30,7 +30,7 @@ student id: 20205031
 	for문을 사용하여 한 픽셀 안에서 random float를 골라 x,y좌표에 더하는 방식으로 random sampling을 적용했다. 
 	sample ray들의 평균값을 해당 픽셀의 rgb값으로 사용했다.
 	
-	![final](https://user-images.githubusercontent.com/78066907/172687428-5963825d-2c68-4165-bf07-82153947b11e.png)
+![final](https://user-images.githubusercontent.com/78066907/172687428-5963825d-2c68-4165-bf07-82153947b11e.png)
 
 	위 사진은 최종 결과이며, 1024spp일 때이다.  
 
@@ -81,7 +81,7 @@ student id: 20205031
 	diffuse와 마찬가지로 albedo=attenation()으로 clolor_값을 사용하였다. 
 	scatter()에서는 input ray와 표면 normal로 reflection 방향을 계산하여 secondary ray를 만들어서 유효한지 확인한 후 true를 return하여 integrate()에서 사용하였다. 
 
-	![metal diffuse](https://user-images.githubusercontent.com/78066907/172676736-1808733e-2d02-4a42-8665-249d01ae73c1.png)
+![metal diffuse](https://user-images.githubusercontent.com/78066907/172676736-1808733e-2d02-4a42-8665-249d01ae73c1.png)
 
 	mirror의 perfect reflection에 randomness를 추가하여 metal처럼 보이게 만들었다. 
 	reflection의 방향벡터에 random한 숫자를 더해 주어 구현했다. diffuse도 수정하여 완전히 구현했다.
