@@ -68,7 +68,7 @@ student id: 20205031
 	앞서 보았던 사진이지만 처음에 Diffuse material부터 구현하였기 때문에 다시 이 사진을 사용했다. 
 	처음에는 integrator의 integrate 함수를 수정해서 만들었기 때문에, indirect lighting까지 구현되었다. 
 	이 때의 diffuse에서는 albedo로 그냥 0.5를 사용하여 색이 적용되지 않았다. 
-	primary ray가 object를 hit하면 hit한 물체의 표면에서 생성되는 secondary ray의 방향을 random하게 만들어서 다양한 방향으로 diffuse하는 성질을 표현했다. 
+	primary ray가 object를 hit하면 hit한 물체의 표면에서 생성되는 secondary ray의 방향을 random하게 만들어서 diffuse 성질을 표현했다. 
 	이후 scatter() 함수를 수정해서 항상 true를 return하게 해서, integrate()에서 재귀적으로 diffuse material의 표면 색을 계산해 주었다. 
 	attenuation()은 간단하게 return color_로 구성하여 integrate에서 albedo로 사용하였다. 
 
@@ -79,7 +79,8 @@ student id: 20205031
 	처음에는 perfect mirror처럼 구성했다. 
 	이 때부터 materal.cpp의 각 함수를 사용하기 시작하여, scatter()를 수정하였다. 
 	diffuse와 마찬가지로 albedo=attenation()으로 clolor_값을 사용하였다. 
-	scatter()에서는 input ray와 표면 normal로 reflection 방향을 계산하여 secondary ray를 만들어서 유효한지 확인한 후 true를 return하여 integrate()에서 사용하였다. 
+	scatter()에서는 input ray와 표면 normal로 reflection 방향을 계산하여 secondary ray를 만든다.
+	이 ray가 유효한지 확인한 후 true를 return하여 integrate()에서 사용하였다. 
 
 ![metal diffuse](https://user-images.githubusercontent.com/78066907/172676736-1808733e-2d02-4a42-8665-249d01ae73c1.png)
 
@@ -87,6 +88,7 @@ student id: 20205031
 	reflection의 방향벡터에 random한 숫자를 더해 주어 구현했다. diffuse도 수정하여 완전히 구현했다.
 
 3. dielectric
+
 ![dilectric](https://user-images.githubusercontent.com/78066907/172676832-5564ba77-77d4-4589-9d61-ce38d663404f.png)
 
 	dielectric에서는 refraction rate도 input으로 받아서 IOR_로 저장한다. 
